@@ -6,7 +6,7 @@
 
 ## 安装
 ```sh
-composer require jaguarjack/migration-generator:dev-master
+composer require ledaishu/migration-generator
 ```
 
 ## 平台支持
