@@ -10,6 +10,7 @@ use think\console\Command;
 use think\console\Input;
 use think\console\Output;
 use JaguarJack\MigrateGenerator\MigrateGenerator;
+use think\helper\Str;
 
 class ThinkPHPCommand extends Command
 {
