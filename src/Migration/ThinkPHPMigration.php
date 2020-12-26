@@ -25,10 +25,19 @@ class ThinkPHPMigration extends AbstractMigration
     {
         $this->removeAutoincrementColumn();
 
+		$prefix = env('database.prefix', '');
+		$tableName = $this->table['name'];
+		if(Str::startsWith($tableName, $prefix)){
+			$tableName = Str::substr($tableName,strlen($prefix));
+		}
+		$className = ucfirst(Str::camel($tableName));
+		// echo $className.PHP_EOL;
         return [
-            ucfirst(Str::camel($this->table['name'])),
+			// ucfirst(Str::camel($this->table['name'])),
+			$className,
             // table name
-            $this->table['name'],
+			// $this->table['name'],
+			$tableName,
             // phinx table information
             sprintf("['engine' => '%s', 'collation' => '%s', 'comment' => '%s' %s %s]",
                 $this->table['engine'], $this->table['collation'], $this->table['comment'], $this->getIndexParse()->getAutoIncrement(), $this->getIndexParse()->getPrimaryKeys()),
