@@ -56,9 +56,14 @@ class ThinkPHPCommand extends Command
             }
 
             foreach ($tables as $key => $table) {
-                file_put_contents($migrationsPath  . ($key + 1) . date('YmdHis') . '_' . $table->getName() . '.php', $migrateGenerator->getMigrationContent($table));
+				$prefix = env('database.prefix', '');
+				$tableName = $table->getName();
+				if(Str::startsWith($tableName, $prefix)){
+					$tableName = Str::substr($tableName,strlen($prefix));
+				}
+                file_put_contents($migrationsPath  . ($key + 1) . date('YmdHis') . '_' . $tableName . '.php', $migrateGenerator->getMigrationContent($table));
 
-                $output->info(sprintf('%s table migration file generated', $table->getName()));
+                $output->info(sprintf('%s table migration file generated', $tableName));
             }
 
             $this->foreignKeys($tables, $migrationsPath);
